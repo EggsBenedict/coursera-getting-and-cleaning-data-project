@@ -20,8 +20,8 @@ colnames(activityLabels) <- c("activityID", "activityName")
 # Retrieve features
 features <- read.table("UCI HAR Dataset/features.txt")
 
-# Build list of labels featurs that we want to keep and rename name for clarity
-featuresWanted <- grep(".*mean.*|.*std.*", features[,2],ignore.case=TRUE)
+# Build list of labels for features that we want to keep and rename them for clarity
+featuresWanted <- grep(".*mean\\(\\).*|.*std\\(\\).*", features[,2],ignore.case=TRUE)
 featuresWanted.names <- features[featuresWanted,2]
 featuresWanted.names <- gsub("-mean", "Mean", featuresWanted.names)
 featuresWanted.names <- gsub("-std", "Std", featuresWanted.names)
@@ -55,7 +55,7 @@ combinedData <- merge(activityLabels, combinedData, by="activityID")
 combinedData <- select(combinedData, -activityID)
 
 # Aggregate by subject & activity - then take the means.
-combinedMeans <- aggregate(combinedData[, 3:88], list(combinedData$subject, 
+combinedMeans <- aggregate(combinedData[, 3:68], list(combinedData$subject, 
                  combinedData$activityName), mean)
 colnames(combinedMeans)[c(1,2)] <- c("subject", "activityName")
 
